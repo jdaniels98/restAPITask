@@ -43,7 +43,7 @@ exports.deleteUser = async (req, res) => {
     }
 }
 
-exports.login = async (req, res) => {
+exports.loginUser = async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.username, req.body.password)
         res.status(200).send({user: user.username})
