@@ -12,8 +12,8 @@ exports.createUser = async (req, res) => {
 
 exports.readUser = async (req, res) => {
     try {
-        const users = await User.find({})
-        res.status(200).send({user: users})
+        await User.deleteOne({username: req.params.username})
+        res.status(200).send({message: "USER SUCCESSFULLY DELETED"})
     } catch (error) {
         console.log(error)
         res.status(500).send({error: error.message})
@@ -27,6 +27,15 @@ exports.updateUser = async (req, res) => {
             {[req.body.key]: req.body.value}
         )
         res.status(200).send({message: "USER UPDATE SUCCESSFUL"})
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({error: error.message})
+    }
+}
+
+exports.deleteUser = async (req, res) => {
+    try {
+        console.log("filler")
     } catch (error) {
         console.log(error)
         res.status(500).send({error: error.message})
