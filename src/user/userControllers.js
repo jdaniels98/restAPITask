@@ -48,9 +48,8 @@ exports.deleteUser = async (req, res) => {
 
 exports.loginUser = async (req, res) => {
     try {
-        const user = await User.findByCredentials(req.body.username, req.body.password)
-        const token = await jwt.sign({_id: user._id}, process.env.SECRET)
-        res.status(200).send({user: user.username})
+        const token = await jwt.sign({_id: req.user._id}, process.env.SECRET)
+        res.status(200).send({user: req.user.username, token, message: "LOG IN SUCCESSFUL"})
     } catch (error) {
         console.log(error)
         res.status(500).send({error: error.message})

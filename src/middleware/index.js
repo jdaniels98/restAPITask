@@ -26,3 +26,18 @@ exports.tokenCheck = async (req, res, next) => {
         res.status(500).send({error: error.message})
     }
 }
+
+exports.comparePass = async (request, response, next) => {
+    try {
+        request.user = await User.findOne({username: request.body.username});
+        if (request.user &&
+            await bcrypt.compare(request.body.password, request.user.password)) {
+                next ()
+            } else {
+                throw new Error ("Incorrect userid or password")
+            }
+    } catch (error) {
+        console.log(error);
+        response.status(500).send({error: error.message})
+    }
+}
