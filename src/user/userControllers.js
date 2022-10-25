@@ -12,8 +12,8 @@ exports.createUser = async (req, res) => {
 
 exports.readUser = async (req, res) => {
     try {
-        await User.deleteOne({username: req.params.username})
-        res.status(200).send({message: "USER SUCCESSFULLY DELETED"})
+        const users = await User.find({})
+        res.status(200).send({user: users})
     } catch (error) {
         console.log(error)
         res.status(500).send({error: error.message})
@@ -35,7 +35,8 @@ exports.updateUser = async (req, res) => {
 
 exports.deleteUser = async (req, res) => {
     try {
-        console.log("filler")
+        await User.deleteOne({username: req.params.username})
+        res.status(200).send({message: "USER DELETED SUCCESSFULLY"})
     } catch (error) {
         console.log(error)
         res.status(500).send({error: error.message})
