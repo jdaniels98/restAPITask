@@ -19,3 +19,16 @@ exports.readUser = async (req, res) => {
         res.status(500).send({error: error.message})
     }
 }
+
+exports.updateUser = async (req, res) => {
+    try {
+        await User.updateOne(
+            {username: req.body.username},
+            {[req.body.key]: req.body.value}
+        )
+        res.status(200).send({message: "USER UPDATE SUCCESSFUL"})
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({error: error.message})
+    }
+}
