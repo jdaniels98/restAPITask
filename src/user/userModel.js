@@ -21,7 +21,7 @@ const userSchema = new mongoose.Schema({
 
 userSchema.statics.findByCredentials = async (username, password) => {
     const user = await User.findOne({username})
-    if (user && bcrypt.compare(password, user.password)) {
+    if (user && await bcrypt.compare(password, user.password)) {
         return user
     } else {
         throw new Error()
