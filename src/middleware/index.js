@@ -15,11 +15,16 @@ exports.hashPass = async (req, res, next) => {
 
 exports.tokenCheck = async (req, res, next) => {
     try {
-        const token = req.header("Authorization")
-        const decodedToken = await jwt.verify(token, process.env.SECRET)
-        const user = await User.findById(decodedToken._id)
-        console.log(user)
-        request.user = user
+        if (req.header("Authorization")) {
+            const token = req.header("Authorization").replace("Bearer", "")
+            const decodedToken = await jwt.verify(token, process.env.SECRET)
+            console.log(decodedToken)
+            const user = await User.findById(decodedToken._id)
+            req.user = user
+            console.log("Headers Passed")
+        } else {
+            console.log("No Header Passed")
+        }
         next()
     } catch (error) {
         console.log(error)
