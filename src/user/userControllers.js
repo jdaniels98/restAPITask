@@ -51,7 +51,7 @@ exports.loginUser = async (req, res) => {
         if (req.user) {
             res.status(200).send({username: req.user.username})
         } else {
-            const user = User.findByCredentials(
+            const user = await User.findByCredentials(
                 req.body.username,
                 req.body.password
             )
