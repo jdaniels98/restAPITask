@@ -16,7 +16,7 @@ exports.hashPass = async (req, res, next) => {
 exports.tokenCheck = async (req, res, next) => {
     try {
         if (req.header("Authorization")) {
-            const token = req.header("Authorization").replace("Bearer", "")
+            const token = req.header("Authorization").replace("Bearer ", "")
             const decodedToken = await jwt.verify(token, process.env.SECRET)
             console.log(decodedToken)
             const user = await User.findById(decodedToken._id)
